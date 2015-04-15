@@ -19,11 +19,15 @@ public class MainActivity extends ActionBarActivity {
 
     ImageView dice;
     ImageButton rollButton;
+    Button clear;
     EditText guessedNum;
     TextView mTextView;
+    TextView wrong;
+    TextView right;
     int g;
     String result;
-
+    int countR=0;
+    int countW =0;
 
 
     OnClickListener buttonListener = new OnClickListener() {
@@ -33,9 +37,8 @@ public class MainActivity extends ActionBarActivity {
              int num = ((int)(Math.random()*6)+1);
              guessedNum =(EditText) findViewById(R.id.guess);
              g = Integer.parseInt(guessedNum.getText().toString());
-
-
-            switch(num){
+       // if(!guessedNum.equals(null)) {
+            switch (num) {
                 case 1:
                     dice.setImageResource(R.mipmap.dice1);
                     break;
@@ -56,20 +59,40 @@ public class MainActivity extends ActionBarActivity {
                     break;
             }
 
-            if(num== g){
+            if (num == g) {
                 result = "correct";
+                countR++;
 
-            }
-            else
+            } else {
                 result = "incorrect";
+                countW++;
+            }
 
             mTextView.setText(result);
+            wrong.setText(""+countW);
+            right.setText(""+countR);
+       // }
+        //    else
+      //  {
+       //     mTextView.setText("Hey put a number in");
+      //  }
 
 
 
 
         }
     };
+    OnClickListener clearListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            countR =0;
+            countW =0;
+            wrong.setText("" +countW);
+            right.setText("" +countR);
+        }
+
+        };
 
 
 
@@ -81,7 +104,13 @@ public class MainActivity extends ActionBarActivity {
         dice = (ImageView) findViewById(R.id.result);
         mTextView = (TextView) findViewById(R.id.textView);
         guessedNum = (EditText) findViewById(R.id.guess);
+        wrong = (TextView) findViewById(R.id.wrong);
+        right = (TextView) findViewById(R.id.right);
+        clear = (Button) findViewById(R.id.clear);
+
         rollButton.setOnClickListener(buttonListener);
+        clear.setOnClickListener(clearListener);
+
 
 
     }
